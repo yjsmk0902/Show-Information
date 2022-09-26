@@ -19,45 +19,58 @@
     </script>
 </head>
 <body>
-<div class="container py-5" style="max-width: 800px">
-    <form action="" th:action th:object="${searchForm}" method="post">
-        <div class="row">
-            <div class="col-2">
-                <!--SearchType 선택 창-->
-                <div class="btn-group col" role="group" aria-label="Basic radio toggle button group">
-                    <th:block th:each="type :${searchTypes}">
-                        <input th:field="*{searchType}" th:value="${type.name()}"
-                               type="radio" class="btn-check">
-                        <label th:for="${#ids.prev('searchType')}" th:text="${type.description}"
-                               class="btn btn-outline-primary">공연</label>
-                    </th:block>
+<div class="container py-5" style="">
+    <header class="sticky-top">
+        <form action="" th:action th:object="${searchForm}" method="post">
+            <div class="row">
+                <div class="col">
+                    <!--SearchType 선택 창-->
+                    <div class="btn-group col" role="group" aria-label="Basic radio toggle button group">
+                        <th:block th:each="type :${searchTypes}">
+                            <input th:field="*{searchType}" th:value="${type.name()}"
+                                   type="radio" class="btn-check">
+                            <label th:for="${#ids.prev('searchType')}" th:text="${type.description}"
+                                   class="btn btn-outline-primary">공연</label>
+                        </th:block>
+                    </div>
+                </div>
+
+                <!--검색 창-->
+                <div class="col">
+                    <input type="text" id="search" class="form-control"
+                           placeholder="검색어를 입력하세요."/>
+                </div>
+                <div class="col">
+                    <input type="text" name="daterange" value="" class="form-control"/>
                 </div>
             </div>
 
-            <!--검색 창-->
-            <div class="col">
-                <input type="text" id="search" class="form-control"
-                       placeholder="검색어를 입력하세요."/>
+            <!--검색 버튼-->
+            <div class="row py-3">
+                <button class="btn btn-outline-primary align-items-center" type="submit">검색</button>
             </div>
-            <div class="col">
-                <input type="text" name="daterange" value="" class="form-control"/>
-            </div>
-        </div>
-        <!--검색 버튼-->
-        <div class="row py-3">
-            <button class="w-100 btn btn-outline-primary btn-lg" type="submit">검색</button>
-        </div>
 
-        <!--공연 리스트-->
+        </form>
+    </header>
+
+    <!--공연 리스트-->
+    <main style="padding-top: 120px;">
         <div>
             <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    공연 이름
-                    <span class="badge bg-primary rounded-pill">공연 날짜</span>
-                </li>
+                <th:block th:each="show : ${shows}">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <label th:text="${show.getShowName()}"> 공연 이름</label>
+                        <span class="badge bg-primary rounded-pill"
+                              th:text="${show.getDate()}">
+                            공연 날짜
+                        </span>
+                        <button class="badge bg-primary rounded-pill" type="submit">보러가기</button>
+
+                    </li>
+                </th:block>
             </ul>
         </div>
-    </form>
+    </main>
 </div>
 </body>
 </html>
