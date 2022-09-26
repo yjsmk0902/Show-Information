@@ -1,7 +1,7 @@
 package example.show.domain.entity;
 
 public enum SearchType {
-    ACTOR("배우"), SHOW("공연");
+    ACTOR("배우"), SHOW("공연"), PLACE("장소");
 
     private final String description;
 

@@ -10,6 +10,8 @@ public class Show {
 
     private Long id;
     private String showName;
+
+    private String place;
     private List<String> actors;
     private Date date;
 
