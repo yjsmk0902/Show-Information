@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -37,8 +39,9 @@ public class ShowController {
         actorSetB.add("actorB");
         actorSetB.add("actorC");
 
-        Date dateA = new Date(2022, 12, 25, 0, 0);
-        Date dateB = new Date(2022, 12, 26, 0, 0);
+        LocalDate dateA = LocalDate.of(2023, 2, 24);
+
+        LocalDate dateB = LocalDate.of(2022, 12, 24);
 
         showRepository.save(new Show("showA", actorSetA, dateA));
         showRepository.save(new Show("showB", actorSetB, dateB));

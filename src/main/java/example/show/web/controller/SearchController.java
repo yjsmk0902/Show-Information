@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Controller
@@ -38,13 +39,11 @@ public class SearchController {
     }
 
     @PostMapping
-    public String search(SearchDTO searchDto, RedirectAttributes redirectAttributes) {
+    public String search(@ModelAttribute SearchDTO searchDto, RedirectAttributes redirectAttributes) {
         log.info("searchDto.searchType={}", searchDto.getSearchType());
         log.info("searchDto.keyWord={}", searchDto.getKeyWord());
-        log.info("searchDto.date={}", searchDto.getDate());
         return "shows";
     }
-
 
 
 }
