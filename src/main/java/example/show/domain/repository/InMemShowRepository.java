@@ -34,20 +34,25 @@ public class InMemShowRepository implements ShowRepository {
 
         SearchType searchType = cond.getSearchType();
         String keyWord = cond.getKeyWord();
+        String startEndDate = cond.getStartEndDate();
+
         Date startDate;
         Date endDate;
 
-        Optional<Map<String, Date>> stat = Optional.ofNullable(cond.getStartEndDate());
-
-        if (stat.isEmpty()) {
+        if (startEndDate != null) {
+            String[] dateRange = startEndDate.split("~");
+            startDate = Date.valueOf(dateRange[0]);
+            endDate = Date.valueOf(dateRange[1]);
+        }else{
             startDate = Date.valueOf(LocalDate.now());
             endDate = Date.valueOf("2030-12-31");
-        }else {
-            startDate = cond.getStartEndDate().get("startDate");
-            endDate = cond.getStartEndDate().get("endDate");
         }
 
         log.info("Mem data init end");
+        log.info("searchType={}", searchType);
+        log.info("keyWord={}", keyWord);
+        log.info("startDate={}, endDate={}", startDate, endDate);
+
         if (searchType == null) {
             return new ArrayList<>(store.values());
         }else{

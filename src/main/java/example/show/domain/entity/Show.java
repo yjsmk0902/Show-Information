@@ -17,9 +17,9 @@ public class Show {
 
     public Show(){
     }
-
-    public Show(String showName, List<String> actors, Date date) {
+    public Show(String showName, String place, List<String> actors, Date date) {
         this.showName = showName;
+        this.place = place;
         this.actors = actors;
         this.date = date;
     }

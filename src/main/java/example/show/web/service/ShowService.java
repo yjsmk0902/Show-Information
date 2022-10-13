@@ -2,6 +2,7 @@ package example.show.web.service;
 
 import example.show.domain.dto.ShowSearchCond;
 import example.show.domain.entity.Show;
+import example.show.domain.repository.InMemShowRepository;
 import example.show.domain.repository.ShowRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

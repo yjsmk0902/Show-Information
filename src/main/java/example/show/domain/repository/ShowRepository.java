@@ -9,5 +9,6 @@ public interface ShowRepository {
 
     Show save(Show show);
 
+
     List<Show> findAll(ShowSearchCond cond);
 }
