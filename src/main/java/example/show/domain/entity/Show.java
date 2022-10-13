@@ -1,10 +1,8 @@
 package example.show.domain.entity;
 
 import lombok.Data;
-import org.springframework.cglib.core.Local;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Data
@@ -15,12 +13,12 @@ public class Show {
 
     private String place;
     private List<String> actors;
-    private LocalDate date;
+    private Date date;
 
     public Show(){
     }
 
-    public Show(String showName, List<String> actors, LocalDate date) {
+    public Show(String showName, List<String> actors, Date date) {
         this.showName = showName;
         this.actors = actors;
         this.date = date;

@@ -1,9 +1,11 @@
 package example.show.web.controller;
 
-import example.show.domain.dto.SearchDTO;
+import example.show.domain.dto.ShowSearchCond;
 import example.show.domain.entity.SearchType;
 import example.show.domain.entity.Show;
+import example.show.domain.repository.InMemShowRepository;
 import example.show.domain.repository.ShowRepository;
+import example.show.web.service.ShowService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Controller
@@ -23,26 +24,24 @@ import java.util.List;
 @RequestMapping("/search")
 public class SearchController {
 
-    private static final ShowRepository showRepository = new ShowRepository();
-
+    private final ShowService showService;
     @ModelAttribute("searchTypes")
     public SearchType[] searchType() {
         return SearchType.values();
     }
 
     @GetMapping
-    public String searchDTO(Model model) {
-        List<Show> shows = showRepository.findAll();
-        model.addAttribute("searchDTO", new SearchDTO());
+    public String shows(@ModelAttribute("showSearch") ShowSearchCond showSearch, Model model) {
+        List<Show> shows = showService.findShows(showSearch);
         model.addAttribute("shows", shows);
         return "shows";
     }
 
     @PostMapping
-    public String search(@ModelAttribute SearchDTO searchDto, RedirectAttributes redirectAttributes) {
-        log.info("searchDto.searchType={}", searchDto.getSearchType());
-        log.info("searchDto.keyWord={}", searchDto.getKeyWord());
-        log.info("searchDto.startEndDate={}", searchDto.getStartEndDate());
+    public String search(@ModelAttribute ShowSearchCond showSearchCond, RedirectAttributes redirectAttributes) {
+        log.info("searchDto.searchType={}", showSearchCond.getSearchType());
+        log.info("searchDto.keyWord={}", showSearchCond.getKeyWord());
+        log.info("searchDto.startEndDate={}", showSearchCond.getStartEndDate());
         return "shows";
     }
 
