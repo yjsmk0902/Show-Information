@@ -25,6 +25,10 @@ dependencies {
 	//Jsoup
 	implementation 'org.jsoup:jsoup:1.15.3'
 
+	//Selenium
+	implementation 'org.seleniumhq.selenium:selenium-java:4.5.0'
+
+
 	compileOnly 'org.projectlombok:lombok'
 
 	//DB

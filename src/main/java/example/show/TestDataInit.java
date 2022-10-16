@@ -10,6 +10,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
@@ -17,6 +21,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,18 +31,35 @@ public class TestDataInit {
     private final ShowRepository showRepository;
 
     @EventListener(ApplicationReadyEvent.class)
-    public void initData() throws IOException {
+    public void initData() throws IOException, InterruptedException {
 
+        //WebDriver 설정
+        WebDriver driver;
         String SOURCE_URL = "http://ticket.melon.com/concert/index.htm?genreType=GENRE_ART";
-        Connection con = Jsoup.connect(SOURCE_URL);
 
-        Document doc = con.get();
-        Elements elements = doc.select("ul.list_main_concert");
+        //Properties 설정
+        String WEB_DRIVER_ID = "webdriver.chrome.driver";
+        String WEB_DRIVER_PATH = "/Users/luke/Desktop/Spring/chromedriver";
 
-        for (Element select : elements) {
-            log.info("select={}", select);
+        System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+        driver = new ChromeDriver();
+        driver.get(SOURCE_URL);
+        //Thread.sleep(1000);
+        List<WebElement> elements = driver.findElements(By.cssSelector("#perf_poster li"));
+        for (WebElement select : elements) {
+            try {
+                WebElement title = select.findElement(By.className("tit"));
+                WebElement day = select.findElement(By.className("day"));
+                WebElement location = select.findElement(By.className("location"));
+
+                log.info("title={}", title.getText());
+                log.info("day={}", day.getText());
+                log.info("location={}", location.getText());
+            } catch (NoSuchElementException e) {
+                break;
+            }
+
         }
-        log.info("elements={}", elements);
 
 
 
