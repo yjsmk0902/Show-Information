@@ -68,7 +68,8 @@ public class InMemShowRepository implements ShowRepository {
                                 if (ObjectUtils.isEmpty(startDate) || ObjectUtils.isEmpty((endDate))) {
                                     return true;
                                 }
-                                return show.getDate().after(startDate) && show.getDate().before(endDate);
+                                return startDate.after(show.getStartDate()) && startDate.before(show.getEndDate())
+                                        || endDate.after(show.getStartDate()) && endDate.before(show.getEndDate());
                             })
                             .collect(Collectors.toList());
                 case ACTOR:
@@ -82,7 +83,8 @@ public class InMemShowRepository implements ShowRepository {
                                 if (ObjectUtils.isEmpty(startDate) || ObjectUtils.isEmpty((endDate))) {
                                     return true;
                                 }
-                                return show.getDate().after(startDate) && show.getDate().before(endDate);
+                                return startDate.after(show.getStartDate()) && startDate.before(show.getEndDate())
+                                        || endDate.after(show.getStartDate()) && endDate.before(show.getEndDate());
                             })
                             .collect(Collectors.toList());
                 case PLACE:
@@ -96,7 +98,8 @@ public class InMemShowRepository implements ShowRepository {
                                 if (ObjectUtils.isEmpty(startDate) || ObjectUtils.isEmpty((endDate))) {
                                     return true;
                                 }
-                                return show.getDate().after(startDate) && show.getDate().before(endDate);
+                                return startDate.after(show.getStartDate()) && startDate.before(show.getEndDate())
+                                        || endDate.after(show.getStartDate()) && endDate.before(show.getEndDate());
                             })
                             .collect(Collectors.toList());
                 default:

@@ -13,14 +13,17 @@ public class Show {
 
     private String place;
     private List<String> actors;
-    private Date date;
+    private Date startDate;
+    private Date endDate;
 
     public Show(){
     }
-    public Show(String showName, String place, List<String> actors, Date date) {
+
+    public Show(String showName, String place, List<String> actors, Date startDate, Date endDate) {
         this.showName = showName;
         this.place = place;
         this.actors = actors;
-        this.date = date;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 }
