@@ -1,3 +1,8 @@
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0"
+	}
+}
 plugins {
 	id 'org.springframework.boot' version '2.7.3'
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
@@ -21,13 +26,22 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+	//QueryDSL
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	annotationProcessor(
+			"javax.persistence:javax.persistence-api",
+			"javax.annotation:javax.annotation-api",
+			"com.querydsl:querydsl-apt:${queryDslVersion}:jpa"
+	)
+
+	//크롤링
 	//Jsoup
 	implementation 'org.jsoup:jsoup:1.15.3'
-
 	//Selenium
-	implementation 'org.seleniumhq.selenium:selenium-java:4.5.0'
-
+	implementation 'org.seleniumhq.selenium:selenium-java:4.5.3'
 
 	compileOnly 'org.projectlombok:lombok'
 
@@ -37,6 +51,19 @@ dependencies {
 
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//JUnit4 추가
+	testImplementation("org.junit.vintage:junit-vintage-engine"){
+		exclude group: "org.hamcrest", module: "hamcrest-core"
+	}
+}
+
+//QueryDSL
+sourceSets {
+	main{
+		java {
+			srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
+		}
+	}
 }
 
 tasks.named('test') {

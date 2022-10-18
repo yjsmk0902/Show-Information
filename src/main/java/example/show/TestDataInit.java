@@ -1,10 +1,8 @@
 package example.show;
 
-import example.show.domain.entity.Show;
-import example.show.domain.repository.ShowRepository;
+import example.show.domain.repository.ShowInfoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.internal.StringUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -15,7 +13,6 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.util.StringUtils;
 
-import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +22,7 @@ import java.util.List;
 public class TestDataInit {
 
 
-    private final ShowRepository showRepository;
+    private final ShowInfoRepository showRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     public void initData() throws InterruptedException {

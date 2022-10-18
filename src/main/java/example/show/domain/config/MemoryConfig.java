@@ -1,8 +1,7 @@
 package example.show.domain.config;
 
-import example.show.domain.repository.InMemShowRepository;
-import example.show.domain.repository.ShowRepository;
-import example.show.web.service.ShowService;
+import example.show.domain.repository.InMemShowInfoRepository;
+import example.show.domain.repository.ShowInfoRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class MemoryConfig {
 
     @Bean
-    public ShowRepository showRepository() {
-        return new InMemShowRepository();
+    public ShowInfoRepository showRepository() {
+        return new InMemShowInfoRepository();
     }
 }

@@ -1,4 +1,4 @@
-package example.show.domain.entity;
+package example.show.domain.dto;
 
 public enum SearchType {
     ACTOR("배우"), SHOW("공연"), PLACE("장소");

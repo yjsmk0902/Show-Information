@@ -1,17 +1,14 @@
 package example.show.web.controller;
 
 import example.show.domain.dto.ShowSearchCond;
-import example.show.domain.entity.SearchType;
+import example.show.domain.dto.SearchType;
 import example.show.domain.entity.Show;
-import example.show.domain.repository.InMemShowRepository;
-import example.show.domain.repository.ShowRepository;
 import example.show.web.service.ShowService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
