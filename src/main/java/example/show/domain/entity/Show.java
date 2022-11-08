@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,8 @@ public class Show {
 
     private LocalDateTime showTime;     //관람 시간
 
-    private LocalDateTime startShow;    //공연 기간 (시작)
-    private LocalDateTime endShow;      //공연 기간 (종료)
+    private LocalDate startShow;    //공연 기간 (시작)
+    private LocalDate endShow;      //공연 기간 (종료)
 
     private Integer viewGrade;          //관람 등급
 

@@ -1,6 +1,6 @@
 package example.show;
 
-import example.show.domain.repository.ShowInfoRepository;
+import example.show.domain.repository.ShowRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -11,9 +11,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.util.StringUtils;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
 public class TestDataInit {
 
 
-    private final ShowInfoRepository showRepository;
+    private final ShowRepository showRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     public void initData() throws InterruptedException {
@@ -86,28 +87,49 @@ public class TestDataInit {
             String showName = driver.findElement(By.xpath("//*[@id=\"conts\"]/div/div[1]/div[1]/div[2]/p[2]")).getText();
             String location = driver.findElement(By.xpath("//*[@id=\"performanceHallBtn\"]")).getAttribute("title");
             String dateRange = driver.findElement(By.xpath("//*[@id=\"periodInfo\"]")).getText();
-            List<WebElement> singers = driver.findElements(By.className("singer"));
-            List<String> actorSet = new ArrayList<>();
-            for (WebElement select : singers) {
-                actorSet.add(select.getText());
-                log.info("select={}", select.getText());
+
+            shutPopWindow(driver, link);
+            shutPopWindow(driver, link);
+            shutPopWindow(driver, link);
+            driver.findElement(By.xpath("//*[@id=\"ticketing_process_box\"]/div/div[1]/dl[1]/dd[1]/button[2]")).click();
+
+            String[] split = dateRange.split(" - ");
+            DateTimeFormatter stringToLocalDate = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+            LocalDate startDate = LocalDate.parse(split[0], stringToLocalDate);
+            LocalDate endDate = LocalDate.parse(split[1], stringToLocalDate);
+            LocalDate cursorDate = startDate;
+
+            List<WebElement> dateChoice = driver.findElements(By.cssSelector("#list_date li button"));
+            log.info("dateChoice={}", dateChoice);
+            for (WebElement date : dateChoice) {
+                date.click();
+                List<WebElement> timeChoice = driver.findElements(By.xpath("//*[@id=\"list_time\"]"));
+                for (WebElement time : timeChoice) {
+                    String showTime = driver.findElement(By.className("txt")).getText();
+                    String actor = driver.findElement(By.className("casting-name")).getText();
+                    log.info("showTime={}", showTime);
+                    log.info("actor={}", actor);
+                }
             }
-
-
-            String replace = StringUtils.replace(dateRange, ".", "-");
-            String[] split = replace.split(" - ");
-            Date startDate = Date.valueOf(split[0]);
-            Date endDate = Date.valueOf(split[1]);
 
             log.info("=======================");
             log.info("showName = {}", showName);
             log.info("location = {}", location);
             log.info("startDate={}, endDate={}", startDate, endDate);
-            log.info("actorSet={}", actorSet);
             log.info("=======================");
         }
         driver.close();
         driver.quit();
 
+    }
+
+    public void shutPopWindow(WebDriver driver, String url) {
+        driver.get(url);
+        String main = driver.getWindowHandle();
+        for (String handle : driver.getWindowHandles()) {
+            if (!handle.equals(main)) {
+                driver.switchTo().window(handle).close();
+            }
+        }
     }
 }

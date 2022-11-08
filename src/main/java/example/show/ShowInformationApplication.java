@@ -1,7 +1,7 @@
 package example.show;
 
 import example.show.domain.config.MemoryConfig;
-import example.show.domain.repository.ShowInfoRepository;
+import example.show.domain.repository.ShowRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,7 @@ public class ShowInformationApplication {
 		SpringApplication.run(ShowInformationApplication.class, args);
 	}
 	@Bean
-	public TestDataInit testDataInit(ShowInfoRepository showRepository) {
+	public TestDataInit testDataInit(ShowRepository showRepository) {
 		return new TestDataInit(showRepository);
 	}
 
